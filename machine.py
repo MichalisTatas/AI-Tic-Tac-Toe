@@ -1,4 +1,0 @@
-import board
-
-board.mainloop()
-
