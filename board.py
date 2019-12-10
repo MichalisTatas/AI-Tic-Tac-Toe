@@ -29,22 +29,22 @@ def enableButton():
     button9.configure(state=NORMAL)
 
 def getBoard():
-    currBoard = [button1,button2,button3,
-                 button4,button5,button6,
-                 button7,button8,button9]
+    currBoard = [button1['text'],button2['text'],button3['text'],
+                 button4['text'],button5['text'],button6['text'],
+                 button7['text'],button8['text'],button9['text']]
     return currBoard
 
 
 def btnClick(buttons):
-    if buttons["text"] == " " :
-        buttons["text"] = "X"
+    if buttons['text'] == " " :
+        buttons['text'] = "X"
     else:
         tkinter.messagebox.showinfo("Tic-Tac-Toe", "Button already Clicked!")
 
 def isDraw():
-    if (button1["text"] != ' ' and button2["text"] != ' ' and button3["text"] != ' ' and
-        button4["text"] != ' ' and button5["text"] != ' ' and button6["text"] != ' ' and
-        button7["text"] != ' ' and button8["text"] != ' ' and button9["text"] != ' '):
+    if (button1['text'] != ' ' and button2['text'] != ' ' and button3['text'] != ' ' and
+        button4['text'] != ' ' and button5['text'] != ' ' and button6['text'] != ' ' and
+        button7['text'] != ' ' and button8['text'] != ' ' and button9['text'] != ' '):
         disableButton()
         tkinter.messagebox.showinfo("Tic-Tac-Toe", "It is a Tie! ")
         board.quit()

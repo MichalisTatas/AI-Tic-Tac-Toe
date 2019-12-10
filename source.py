@@ -9,23 +9,71 @@ def getSuccessorStates(myBoard, player):
     successorStates = []
     i=0
     while i<9:
-        if myBoard[i]["text"] == ' ':
-            myBoard[i]["text"] = symbol
+        if myBoard[i] == ' ':
+            myBoard[i] = symbol
             successorStates.append(myBoard)
-            myBoard[i]["text"] = ' '
+            myBoard[i] = ' '
         i = i+1
     return successorStates
 
 
+def isDrawTest(b):
+    if (b[0] != ' ' and b[1] != ' ' and b[2] != ' ' and
+        b[3] != ' ' and b[4] != ' ' and b[5] != ' ' and
+        b[6] != ' ' and b[7] != ' ' and b[8] != ' '):
+        disableButton()
+        tkinter.messagebox.showinfo("Tic-Tac-Toe", "It is a Tie! ")
+        board.quit()
+        return True
+    return False
+
+
+def isWinForPlayerTest(b):
+    if (b[0] == 'X' and b[1] == 'X' and b[3] == 'X' or
+        b[3] == 'X' and b[4] == 'X' and b[5] == 'X' or
+        b[6] == 'X' and b[7] == 'X' and b[8] == 'X' or
+        b[0] == 'X' and b[4] == 'X' and b[8] == 'X' or
+        b[2] == 'X' and b[4] == 'X' and b[6] == 'X' or
+        b[0] == 'X' and b[1] == 'X' and b[2] == 'X' or
+        b[0] == 'X' and b[3] == 'X' and b[6] == 'X' or
+        b[1] == 'X' and b[4] == 'X' and b[7] == 'X' or
+        b[6] == 'X' and b[5] == 'X' and b[8] == 'X') :
+        # disableButton()
+        return True
+    return False
+
+    # elif(flag == 8):
+    #     tkinter.messagebox.showinfo("Tic-Tac-Toe", "It is a Tie")
+def isWinForAiTest(b):
+    if (b[0] == 'O' and b[1] == 'O' and b[2] == 'O' or
+        b[3] == 'O' and b[4] == 'O' and b[5] == 'O' or
+        b[6] == 'O' and b[7] == 'O' and b[8] == 'O' or
+        b[0] == 'O' and b[4] == 'O' and b[8] == 'O' or
+        b[2] == 'O' and b[4] == 'O' and b[6] == 'O' or
+        b[0] == 'O' and b[1] == 'O' and b[2] == 'O' or
+        b[0] == 'O' and b[3] == 'O' and b[6] == 'O' or
+        b[1] == 'O' and b[4] == 'O' and b[7] == 'O' or
+        b[6] == 'O' and b[5] == 'O' and b[8] == 'O') :
+        disableButton()
+        return True
+    return False
+
+
+
+
+
 def MiniMax(myBoard, depth, player, a, b):
-    if isWinForAi():
+    if isWinForAiTest(myBoard):
+        print("DADA")
         return 10
-    if isWinForPlayer():
+    if isWinForPlayerTest(myBoard):
+        print("MAMA")
         return -10
-    if isDraw():
+    if isDrawTest(myBoard):
+        print("FUCKBOY")
         return 0
-    if depth == 0 :
-        # print("CARUSO")
+    if depth == 5 :
+        print("CARUSO")
         return 5
 
     if player == 'human' :
@@ -61,7 +109,6 @@ def aiTurn(depth):
     bestScore = -inf
 
     for successorState in getSuccessorStates(currentBoard, 'human'):
-        print("MPAMPAS")
         score = MiniMax(successorState, depth, 'ai', a, b)
         if score > bestScore:
             bestScore = score
@@ -69,8 +116,9 @@ def aiTurn(depth):
         a = max(a, bestScore)
     i=0
     while i<9:
+        print("MPAMPAS")
         if(currentBoard[i] != bestB[i]):
-           currentBoard[i]["text"] = "O" 
+            currentBoard[i] = 'O'
         i = i+1
 
     
@@ -86,7 +134,8 @@ if __name__ == "__main__":
             break
         # cu = getBoard()
         # for x in getSuccessorStates(cu, 'ai'):
-        #     print("POUTAS")
+        #     print(x[0]["text"],x[1]["text"], x[2]["text"], x[3]["text"])
+            
         
         aiTurn(depth)
         depth = depth -1
