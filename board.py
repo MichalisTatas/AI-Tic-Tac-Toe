@@ -46,8 +46,6 @@ def isDraw():
         button4['text'] != ' ' and button5['text'] != ' ' and button6['text'] != ' ' and
         button7['text'] != ' ' and button8['text'] != ' ' and button9['text'] != ' '):
         disableButton()
-        tkinter.messagebox.showinfo("Tic-Tac-Toe", "It is a Tie! ")
-        board.quit()
         return True
     return False
 
@@ -58,14 +56,11 @@ def isWinForPlayer():
         button7['text'] == 'X' and button8['text'] == 'X' and button9['text'] == 'X' or
         button1['text'] == 'X' and button5['text'] == 'X' and button9['text'] == 'X' or
         button3['text'] == 'X' and button5['text'] == 'X' and button7['text'] == 'X' or
-        button1['text'] == 'X' and button2['text'] == 'X' and button3['text'] == 'X' or
         button1['text'] == 'X' and button4['text'] == 'X' and button7['text'] == 'X' or
         button2['text'] == 'X' and button5['text'] == 'X' and button8['text'] == 'X' or
-        button7['text'] == 'X' and button6['text'] == 'X' and button9['text'] == 'X') :
-        # disableButton()
+        button3['text'] == 'X' and button6['text'] == 'X' and button9['text'] == 'X') :
+        disableButton()
         return True
-    else:
-        isDraw()       #no need to call in isWinForAi bcz the player playes the last move
     return False
 
     # elif(flag == 8):
@@ -76,10 +71,9 @@ def isWinForAi():
         button7['text'] == 'O' and button8['text'] == 'O' and button9['text'] == 'O' or
         button1['text'] == 'O' and button5['text'] == 'O' and button9['text'] == 'O' or
         button3['text'] == 'O' and button5['text'] == 'O' and button7['text'] == 'O' or
-        button1['text'] == 'O' and button2['text'] == 'O' and button3['text'] == 'O' or
         button1['text'] == 'O' and button4['text'] == 'O' and button7['text'] == 'O' or
         button2['text'] == 'O' and button5['text'] == 'O' and button8['text'] == 'O' or
-        button7['text'] == 'O' and button6['text'] == 'O' and button9['text'] == 'O') :
+        button3['text'] == 'O' and button6['text'] == 'O' and button9['text'] == 'O') :
         disableButton()
         return True
     return False

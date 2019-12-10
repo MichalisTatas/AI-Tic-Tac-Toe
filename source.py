@@ -25,59 +25,42 @@ def isDrawTest(b):
         return True
     return False
 
-
 def isWinForPlayerTest(b):
-    if (b[0] == 'X' and b[1] == 'X' and b[3] == 'X' or
+    if (b[0] == 'X' and b[1] == 'X' and b[2] == 'X' or
         b[3] == 'X' and b[4] == 'X' and b[5] == 'X' or
         b[6] == 'X' and b[7] == 'X' and b[8] == 'X' or
         b[0] == 'X' and b[4] == 'X' and b[8] == 'X' or
         b[2] == 'X' and b[4] == 'X' and b[6] == 'X' or
-        b[0] == 'X' and b[1] == 'X' and b[2] == 'X' or
         b[0] == 'X' and b[3] == 'X' and b[6] == 'X' or
         b[1] == 'X' and b[4] == 'X' and b[7] == 'X' or
-        b[6] == 'X' and b[5] == 'X' and b[8] == 'X') :
-        # disableButton()
+        b[2] == 'X' and b[5] == 'X' and b[8] == 'X') :
         return True
     return False
 
-    # elif(flag == 8):
-    #     tkinter.messagebox.showinfo("Tic-Tac-Toe", "It is a Tie")
 def isWinForAiTest(b):
     if (b[0] == 'O' and b[1] == 'O' and b[2] == 'O' or
         b[3] == 'O' and b[4] == 'O' and b[5] == 'O' or
         b[6] == 'O' and b[7] == 'O' and b[8] == 'O' or
         b[0] == 'O' and b[4] == 'O' and b[8] == 'O' or
         b[2] == 'O' and b[4] == 'O' and b[6] == 'O' or
-        b[0] == 'O' and b[1] == 'O' and b[2] == 'O' or
         b[0] == 'O' and b[3] == 'O' and b[6] == 'O' or
         b[1] == 'O' and b[4] == 'O' and b[7] == 'O' or
-        b[6] == 'O' and b[5] == 'O' and b[8] == 'O') :
-        # disableButton()
+        b[2] == 'O' and b[5] == 'O' and b[8] == 'O') :
         return True
     return False
 
-
-
-
-
-def MiniMax(myBoard, depth, player, a, b):
+def MiniMax(myBoard, player, a, b):
     if isWinForAiTest(myBoard):
-        # print("DADA")
         return 10
     if isWinForPlayerTest(myBoard):
-        # print("MAMA")
         return -10
     if isDrawTest(myBoard):
-        # print("FUCKBOY")
         return 0
-    # if depth == 0 :
-    #     # print("CARUSO")
-    #     return 5
 
-    if player == 'human' :
+    if player == 'ai' :
         maxEvaluation = -float("inf")
-        for successorState in getSuccessorStates(myBoard, 'human'):
-            evaluation = MiniMax(successorState, depth-1, 'ai', a, b)
+        for successorState in getSuccessorStates(myBoard, 'ai'):
+            evaluation = MiniMax(successorState, 'human', a, b)
             maxEvaluation = max(maxEvaluation, evaluation)
             a = max(a, maxEvaluation)
             if b < a:
@@ -86,30 +69,25 @@ def MiniMax(myBoard, depth, player, a, b):
 
     else:
         minEvaluation = float("inf")
-        for successorState in getSuccessorStates(myBoard, 'ai'):
-            evaluation = MiniMax(successorState, depth-1, 'human', a, b)
+        for successorState in getSuccessorStates(myBoard, 'human'):
+            evaluation = MiniMax(successorState, 'ai', a, b)
             minEvaluation = min(minEvaluation, evaluation)
             b = min(b, minEvaluation)
             if b < a:
                 return minEvaluation
         return minEvaluation
 
-    
 def humanTurn():
     enableButton()
     board.wait_variable(var)
 
-def aiTurn(depth):
-    # disableButton()
+def aiTurn():
     currentBoard = getBoard()
     a = -float("inf")
     b = float("inf")
     bestScore = -inf
-    getSuccessorStates(currentBoard, 'ai')
     for successorState in getSuccessorStates(currentBoard, 'ai'):
-        # print(successorState)
-        p = successorState.copy()
-        score = MiniMax(p, depth, 'human', a, b)
+        score = MiniMax(successorState, 'human', a, b)
         if score > bestScore:
             bestScore = score
             bestB = successorState.copy()
@@ -157,7 +135,6 @@ def aiTurn(depth):
 
     
 if __name__ == "__main__":
-    depth = 8
     while True:
         humanTurn()     
         board.update_idletasks()
@@ -166,13 +143,12 @@ if __name__ == "__main__":
             tkinter.messagebox.showinfo("Tic-Tac-Toe", "you won")
             board.quit()
             break
-        # cu = getBoard()
-        # for x in getSuccessorStates(cu, 'ai'):
-        #     print(x[0]["text"],x[1]["text"], x[2]["text"], x[3]["text"])
-            
+        elif isDraw():
+            tkinter.messagebox.showinfo("Tic-Tac-Toe", "Its a Tie")
+            board.quit()
+            break     
         
-        aiTurn(depth)
-        depth = depth -1
+        aiTurn()
         board.update_idletasks()
         board.update()
         if isWinForAi():
